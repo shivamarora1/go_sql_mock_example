@@ -36,6 +36,8 @@ func TestShouldRollBackUpdateStats(t *testing.T) {
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening stub connection", err.Error())
 	}
+	defer db.Close()
+
 	mock.ExpectBegin()
 	mock.ExpectExec("UPDATE products").WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectExec("INSERT INTO product_viewers").WithArgs(2, 3).
